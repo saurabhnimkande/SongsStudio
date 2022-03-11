@@ -1,0 +1,16 @@
+#listleft {
+  text-align: center;
+}
+#listleft > h4 {
+  margin: 20px;
+  margin-left: 0px;
+}
+#listleft > button {
+  background-color: white;
+  color: #2bc5b4;
+  border: 1px solid #2bc5b4;
+  height: 50px;
+  width: 150px;
+  border-radius: 30px;
+  margin-top: 20px;
+}

@@ -1,0 +1,20 @@
+#mainContent {
+  display: flex;
+}
+#mainContent > div:nth-child(1) {
+  width: 20%;
+}
+#mainContent > div:nth-child(2) {
+  width: 80%;
+}
+#trendingSection {
+  display: flex;
+  justify-content: space-between;
+}
+#trendingSection > div:nth-child(1) {
+  margin-left: 44vh;
+}
+#trendingSection > div:nth-child(2) {
+  margin-right: 5vh;
+  margin-top: 20px;
+}
