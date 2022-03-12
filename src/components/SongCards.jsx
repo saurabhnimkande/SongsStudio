@@ -1,31 +1,56 @@
 import { useEffect, useRef, useState } from "react";
 import "./SongCards.css";
 
-export const SongCards = () => {
+export const SongCards = ({ filterby }) => {
+  //to store the data that have been requested by the api call.
   let [songData, setSongData] = useState([]);
+  //to sorter the individual song data
   let [singleSongData, setSingleSongData] = useState({});
+  //to store the song index for functionlaity of the forward and back button
   let songIndex = useRef(0);
+  //to display and hide the onscreen music player
   let [toggleMusicPlayer, setToogleMusicPlayer] = useState(false);
+  //for toggling the play/pause button
   let [togglePlay, setTogglePlay] = useState(false);
+  //for sorting the url of the song
   let [songUrl, setSongUrl] = useState("");
+  //for getting the reference of the sound element
   let soundRef = useRef(null);
 
+  // for making the get request
   const getSongData = async () => {
     let data = await fetch(
       "https://s3-ap-southeast-1.amazonaws.com/he-public-data/studiod9c0baf.json"
     );
     let getData = await data.json();
-    setSongData(getData);
+    if (filterby === "Show All") {
+      //by default this option is selected so all the song will be displayed
+      setSongData(getData);
+    } else {
+      //this else part is used for filtering the music list and return the appropriate results
+      let arr = getData.filter((e) => {
+        let str = e.artists;
+        if (str.includes(filterby)) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      setSongData(arr);
+    }
   };
 
+  //for playing the song
   const playSong = () => {
     soundRef.current.play();
   };
 
+  //to pause the song
   const pauseSong = () => {
     soundRef.current.pause();
   };
 
+  // index based changing the changeSong function is used to increment or decrement the index, to get next or previous song
   const changeSong = (diff) => {
     if (diff === -1 && songIndex.current > 0) {
       songIndex.current = songIndex.current - 1;
@@ -41,10 +66,13 @@ export const SongCards = () => {
     });
   };
 
+  //useEffect hook for tracking the filter options selected
+
   useEffect(() => {
     getSongData();
-  }, []);
+  }, [filterby]);
 
+  //useEffect hook for setting the song and setting the reference for the element
   useEffect(() => {
     let audioElement = new Audio(songUrl);
     soundRef.current = audioElement;

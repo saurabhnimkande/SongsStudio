@@ -18,3 +18,8 @@
   margin-right: 5vh;
   margin-top: 20px;
 }
+#filterOptions {
+  width: 150px;
+  height: 30px;
+  outline: none;
+}
